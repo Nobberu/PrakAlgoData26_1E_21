@@ -1,1 +1,2 @@
-# PrakAlgoData26_1E_21
+# Praktikum Algoritma dan Struktur Data
+### Nobbel Kaisar Bhumi  TI-1E / 21
