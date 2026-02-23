@@ -423,3 +423,247 @@ LAPORAN PENDAPATAN PER CABANG:
 | RoyalGarden 4   | Rp     330,000 | Perlu Evaluasi  |
 ======================================================
 ```
+
+<br>
+
+### Tugas 1: Plat Mobil
+
+Kode Program:
+
+```java
+Java
+
+import java.util.Scanner;
+
+public class tugas1_platmobil {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        char kode[] = { 'A', 'B', 'D', 'E', 'F', 'G', 'H', 'L', 'N', 'T' };
+        char kota[][] = {
+            { 'B', 'A', 'N', 'T', 'E', 'N' },
+            { 'J', 'A', 'K', 'A', 'R', 'T', 'A' },
+            { 'B', 'A', 'N', 'D', 'U', 'N', 'G' },
+            { 'C', 'I', 'R', 'E', 'B', 'O', 'N' },
+            { 'B', 'O', 'G', 'O', 'R' },
+            { 'P', 'E', 'K', 'A', 'L', 'O', 'N', 'G', 'A', 'N' },
+            { 'S', 'E', 'M', 'A', 'R', 'A', 'N', 'G' },
+            { 'S', 'U', 'R', 'A', 'B', 'A', 'Y', 'A' },
+            { 'M', 'A', 'L', 'A', 'N', 'G' },
+            { 'T', 'E', 'G', 'A', 'L' },
+        };
+
+        System.out.print("Masukkan kode plat: ");
+        char input = sc.next().toUpperCase().charAt(0);
+
+        int indexSearch = Search(kode, input);
+
+        if (indexSearch == -1) {
+            System.out.println("Kode plat tidak ditemukan.");
+        } else {
+            System.out.print("Kota: ");
+            for (char c : kota[indexSearch]) {
+                System.out.print(c);
+            }
+            System.out.println();
+        }
+        sc.close();
+    }
+
+    private static int Search(char[] arr, char x) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == x) {
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+
+```
+
+Hasil dijalankan program:
+
+```bash
+Bash
+
+Masukkan kode plat: N
+Kota: MALANG
+```
+
+<br>
+
+### Tugas 2: Jadwal Kuliah
+
+Kode Program:
+
+```java
+Java
+
+import java.util.Scanner;
+
+public class tugas2_jadwal {
+
+    // Lazy fix to java scanner bug (hehe)
+    static Scanner scInt = new Scanner(System.in);
+    static Scanner scString = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        System.out.print("Masukkan jumlah jadwal yang akan dibuat: ");
+        int jml = scInt.nextInt();
+
+        String[][] jadwal = new String[jml][4];
+
+        Input(jadwal);
+        TampilkanSemua(jadwal);
+
+        System.out.print("\nCari jadwal berdasarkan hari: ");
+        String cariHari = scString.nextLine();
+        BerdasarHari(jadwal, cariHari);
+
+        System.out.print("\nCari jadwal berdasarkan nama mata kuliah: ");
+        String cariMK = scString.nextLine();
+        BerdasarMK(jadwal, cariMK);
+    }
+
+    static void Input(String[][] jadwal) {
+        for (int i = 0; i < jadwal.length; i++) {
+            System.out.println("\nInput jadwal ke-" + (i + 1));
+            System.out.print("Nama mata kuliah: ");
+            jadwal[i][0] = scString.nextLine();
+
+            System.out.print("Ruang           : ");
+            jadwal[i][1] = scString.nextLine();
+
+            System.out.print("Hari            : ");
+            jadwal[i][2] = scString.nextLine();
+
+            System.out.print("Jam             : ");
+            jadwal[i][3] = scString.nextLine();
+
+            // Quick "Hari" regex checking if user inputs a number instead of day name (just a random thought)
+            boolean isNomor = jadwal[i][2].matches(".*\\d.*");
+
+            // Another regex checking for "Jam" if the user inputs letter or symbol mistakenly
+            boolean onlyNomor = jadwal[i][3].matches(".*\\D.*");
+
+            // Well ofcourse, the check
+            if (isNomor) {
+                System.out.println("Tolong input hari hanya dengan nama hari!");
+                i--;
+                continue;
+            } else if (onlyNomor) {
+                System.out.println("Tolong input jam hanya dengan digit!");
+                i--;
+                continue;
+            }
+        }
+    }
+
+    static void TampilkanSemua(String[][] jadwal) {
+        System.out.println(
+            "\n==============================================================="
+        );
+        System.out.printf(
+            "| %-20s | %-10s | %-10s | %-10s |\n",
+            "Mata Kuliah",
+            "Ruang",
+            "Hari",
+            "Jam"
+        );
+        System.out.println(
+            "==============================================================="
+        );
+        for (String[] baris : jadwal) {
+            System.out.printf(
+                "| %-20s | %-10s | %-10s | %-10s |\n",
+                baris[0],
+                baris[1],
+                baris[2],
+                baris[3]
+            );
+        }
+        System.out.println(
+            "==============================================================="
+        );
+    }
+
+    static void BerdasarHari(String[][] jadwal, String hari) {
+        System.out.println("\nJadwal pada hari " + hari + ":");
+        for (int i = 0; i < jadwal.length; i++) {
+            if (jadwal[i][2].equalsIgnoreCase(hari)) {
+                System.out.printf(
+                    "%s (Ruang %s), Jam: %s\n",
+                    jadwal[i][0],
+                    jadwal[i][1],
+                    jadwal[i][3]
+                );
+            }
+        }
+    }
+
+    static void BerdasarMK(String[][] jadwal, String mk) {
+        System.out.println("\nDetail mata kuliah " + mk + ":");
+        for (int i = 0; i < jadwal.length; i++) {
+            if (jadwal[i][0].equalsIgnoreCase(mk)) {
+                System.out.println(
+                    "Ruang: " +
+                        jadwal[i][1] +
+                        "\nHari: " +
+                        jadwal[i][2] +
+                        "\nJam: " +
+                        jadwal[i][3]
+                );
+            }
+        }
+    }
+}
+
+```
+
+Hasil dijalankan program:
+
+```bash
+Bash
+
+Masukkan jumlah jadwal yang akan dibuat: 2
+
+Input jadwal ke-1
+Nama mata kuliah: PrakASD
+Ruang           : LPY3
+Hari            : Jum'at
+Jam             : berapa?
+Tolong input jam hanya dengan digit!
+
+Input jadwal ke-1
+Nama mata kuliah: PrakASD
+Ruang           : LPY3
+Hari            : Jum'at
+Jam             : 6
+
+Input jadwal ke-2
+Nama mata kuliah: ASD
+Ruang           : LPY3
+Hari            : Rabu
+Jam             : 10
+
+===============================================================
+| Mata Kuliah          | Ruang      | Hari       | Jam        |
+===============================================================
+| PrakASD              | LPY3       | Jum'at     | 6          |
+| ASD                  | LPY3       | Rabu       | 10         |
+===============================================================
+
+Cari jadwal berdasarkan hari: Rabu
+
+Jadwal pada hari Rabu:
+ASD (Ruang LPY3), Jam: 10
+
+Cari jadwal berdasarkan nama mata kuliah: ASD
+
+Detail mata kuliah ASD:
+Ruang: LPY3
+Hari: Rabu
+Jam: 10
+```
