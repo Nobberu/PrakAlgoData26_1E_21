@@ -2,9 +2,9 @@
 
 <br>
 
-### 5.2 Praktikum 1: Mengimplementasikan Sorting menggunakan object
+## Jobsheet V - Sorting (Bubble, Selection, dan Insertion Sort)
 
-#### A. Sorting - Bubble Sort
+### Praktikum 1: Mengimplementasikan Sorting menggunakan object
 
 Kode program:
 
@@ -13,11 +13,10 @@ Java
 Sorting21.java
 
 public class Sorting21 {
-
     int[] data;
     int jumData;
 
-    Sorting21(int Data[], int jmlDat) {
+    public Sorting21(int[] Data, int jmlDat) {
         jumData = jmlDat;
         data = new int[jmlDat];
         for (int i = 0; i < jumData; i++) {
@@ -25,7 +24,7 @@ public class Sorting21 {
         }
     }
 
-    void bubbleSort() {
+    public void bubbleSort() {
         int temp = 0;
         for (int i = 0; i < jumData - 1; i++) {
             for (int j = 1; j < jumData - i; j++) {
@@ -38,7 +37,33 @@ public class Sorting21 {
         }
     }
 
-    void tampil() {
+    public void selectionSort() {
+        for (int i = 0; i < jumData - 1; i++) {
+            int min = i;
+            for (int j = i + 1; j < jumData; j++) {
+                if (data[j] < data[min]) {
+                    min = j;
+                }
+            }
+            int temp = data[i];
+            data[i] = data[min];
+            data[min] = temp;
+        }
+    }
+
+    public void insertionSort() {
+        for (int i = 1; i <= data.length - 1; i++) {
+            int temp = data[i];
+            int j = i - 1;
+            while (j >= 0 && data[j] > temp) {
+                data[j + 1] = data[j];
+                j--;
+            }
+            data[j + 1] = temp;
+        }
+    }
+
+    public void tampil() {
         for (int i = 0; i < jumData; i++) {
             System.out.print(data[i] + " ");
         }
@@ -52,461 +77,518 @@ Java
 SortingMain21.java
 
 public class SortingMain21 {
-
     public static void main(String[] args) {
-        int a[] = { 20, 10, 2, 7, 12 };
+        int[] a = {20, 10, 2, 7, 12};
         Sorting21 dataurut1 = new Sorting21(a, a.length);
-
         System.out.println("Data awal 1");
         dataurut1.tampil();
         dataurut1.bubbleSort();
         System.out.println("Data sudah diurutkan dengan BUBBLE SORT (ASC)");
         dataurut1.tampil();
+        System.out.println("------------------------------------------------");
+
+        int[] b = {30, 20, 2, 8, 14};
+        Sorting21 dataurut2 = new Sorting21(b, b.length);
+        System.out.println("Data awal 2");
+        dataurut2.tampil();
+        dataurut2.selectionSort();
+        System.out.println("Data sudah diurutkan dengan SELECTION SORT (ASC)");
+        dataurut2.tampil();
+        System.out.println("------------------------------------------------");
+
+        int[] c = {40, 10, 4, 9, 3};
+        Sorting21 dataurut3 = new Sorting21(c, c.length);
+        System.out.println("Data awal 3");
+        dataurut3.tampil();
+        dataurut3.insertionSort();
+        System.out.println("Data sudah diurutkan dengan INSERTION SORT (ASC)");
+        dataurut3.tampil();
     }
 }
 ```
 
 Output:
-
 ```bash
 Bash
 
-PS C:\GitHub\PrakAlgoData26_1E_21> java minggu6/src/SortingMain21.java
 Data awal 1
-20 10 2 7 12
+20 10 2 7 12 
 Data sudah diurutkan dengan BUBBLE SORT (ASC)
-2 7 10 12 20
+2 7 10 12 20 
+------------------------------------------------
+Data awal 2
+30 20 2 8 14 
+Data sudah diurutkan dengan SELECTION SORT (ASC)
+2 8 14 20 30 
+------------------------------------------------
+Data awal 3
+40 10 4 9 3 
+Data sudah diurutkan dengan INSERTION SORT (ASC)
+3 4 9 10 40
 ```
 
-<br>
+#### Pertanyaan
 
-#### B. Sorting - Selection Sort
+1. Jelaskan fungsi kode program berikut (Blok Bubble Sort)!
+= Kode tersebut berfungsi untuk melakukan proses swap (pertukaran posisi) dua elemen yang bersebelahan. Jika nilai elemen di sebelah kiri (data[j-1]) lebih besar daripada elemen di sebelah kanan (data[j]), maka posisinya ditukar dengan bantuan variabel penyimpan sementara (temp). Hal ini digunakan untuk mendorong nilai terbesar ke indeks paling kanan.
+
+2. Tunjukkan kode program yang merupakan algoritma pencarian nilai minimum pada selection sort!
+= Kode untuk mencari nilai minimum berada pada blok nested loop (perulangan dalam) pada method selectionSort, yaitu:
+
+```java
+Java
+
+for (int j = i + 1; j < jumData; j++) {
+    if (data[j] < data[min]) {
+        min = j;
+    }
+}
+```
+
+3. Pada Insertion sort jelaskan maksud dari kondisi pada perulangan while (j>=0 && data[j]>temp)!
+= Kondisi tersebut berarti perulangan while akan terus berjalan mundur selama indeks j belum melampaui batas awal array (tidak minus) DAN elemen pada indeks j tersebut nilainya masih lebih besar dibandingkan elemen temp (elemen yang sedang dicek/akan disisipkan). Jika kedua kondisi ini terpenuhi, maka elemen di data[j] perlu digeser ke kanan.
+
+4. Pada Insertion sort, apakah tujuan dari perintah data[j+1] = data[j];?
+= Tujuan dari perintah tersebut adalah untuk menggeser elemen array yang bernilai lebih besar dari nilai temp ke sebelah kanannya sebanyak 1 posisi indeks. Pergeseran ini akan menciptakan "ruang kosong" di posisi yang tepat agar nilai temp nantinya dapat disisipkan.
+
+### Praktikum 2: Mengimplementasikan Sorting menggunakan object
 
 Kode program:
 
 ```java
 Java
-Pangkat21.java
+Mahasiswa21.java
 
-public class Pangkat21 {
+public class Mahasiswa21 {
+    String nim;
+    String nama;
+    String kelas;
+    double ipk;
 
-    int nilai, pangkat;
+    public Mahasiswa21() {}
 
-    Pangkat21(int n, int p) {
-        this.nilai = n;
-        this.pangkat = p;
+    public Mahasiswa21(String nm, String name, String kls, double ip) {
+        nim = nm;
+        nama = name;
+        kelas = kls;
+        ipk = ip;
     }
 
-    int pangkatBF(int a, int n) {
-        int hasil = 1;
-        for (int i = 0; i < n; i++) {
-            hasil = hasil * a;
-        }
+    void tampilInformasi() {
+        System.out.println("Nama : " + nama);
+        System.out.println("NIM  : " + nim);
+        System.out.println("Kelas: " + kelas);
+        System.out.println("IPK  : " + ipk);
+    }
+}
+```
 
-        return hasil;
+```java
+Java
+MahasiswaBerprestasi21.java
+
+public class MahasiswaBerprestasi21 {
+    Mahasiswa21[] listMhs;
+    int idx;
+
+    public MahasiswaBerprestasi21(int size) {
+        listMhs = new Mahasiswa21[size];
+        idx = 0;
     }
 
-    int pangkatDC(int a, int n) {
-        if (n == 1) {
-            return a;
+    void tambah(Mahasiswa21 m) {
+        if (idx < listMhs.length) {
+            listMhs[idx] = m;
+            idx++;
         } else {
-            if ((n & 1) == 1) {
-                return (pangkatDC(a, (n >> 1)) * pangkatDC(a, (n >> 1)) * a);
-            } else {
-                return (pangkatDC(a, (n >> 1)) * pangkatDC(a, (n >> 1)));
+            System.out.println("Data sudah penuh");
+        }
+    }
+
+    void tampil() {
+        for (Mahasiswa21 m : listMhs) {
+            if (m != null) {
+                m.tampilInformasi();
+                System.out.println("-------------------------");
             }
         }
     }
-}
 
+    void bubbleSort() {
+        for (int i = 0; i < listMhs.length - 1; i++) {
+            for (int j = 1; j < listMhs.length - i; j++) {
+                if (listMhs[j] != null && listMhs[j - 1] != null && listMhs[j].ipk > listMhs[j - 1].ipk) {
+                    Mahasiswa21 tmp = listMhs[j];
+                    listMhs[j] = listMhs[j - 1];
+                    listMhs[j - 1] = tmp;
+                }
+            }
+        }
+    }
+
+    void selectionSort() {
+        for (int i = 0; i < listMhs.length - 1; i++) {
+            int idxMin = i;
+            for (int j = i + 1; j < listMhs.length; j++) {
+                if (listMhs[j] != null && listMhs[idxMin] != null && listMhs[j].ipk < listMhs[idxMin].ipk) {
+                    idxMin = j;
+                }
+            }
+            Mahasiswa21 tmp = listMhs[idxMin];
+            listMhs[idxMin] = listMhs[i];
+            listMhs[i] = tmp;
+        }
+    }
+
+    void insertionSortDesc() {
+        for (int i = 1; i < listMhs.length; i++) {
+            if(listMhs[i] == null) continue;
+            Mahasiswa21 temp = listMhs[i];
+            int j = i;
+            while (j > 0 && listMhs[j - 1] != null && listMhs[j - 1].ipk < temp.ipk) { 
+                listMhs[j] = listMhs[j - 1];
+                j--;
+            }
+            listMhs[j] = temp;
+        }
+    }
+}
 ```
 
 ```java
 Java
-MainPangkat.java
+MahasiswaDemo21.java
 
 import java.util.Scanner;
 
-public class MainPangkat {
-
+public class MahasiswaDemo21 {
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Masukkan jumlah elemen: ");
-        int elemen = input.nextInt();
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Masukkan jumlah kuota Mahasiswa: ");
+        int jumlah = sc.nextInt();
+        sc.nextLine();
 
-        Pangkat21[] png = new Pangkat21[elemen];
-        for (int i = 0; i < elemen; i++) {
-            System.out.print(
-                "Masukkan nilai basis elemen ke-" + (i + 1) + ": "
-            );
-            int basis = input.nextInt();
-            System.out.print(
-                "Masukkan nilai pangkat elemen ke-" + (i + 1) + ": "
-            );
-            int pangkat = input.nextInt();
-            png[i] = new Pangkat21(basis, pangkat);
+        MahasiswaBerprestasi21 list = new MahasiswaBerprestasi21(jumlah);
+
+        for (int i = 0; i < jumlah; i++) {
+            System.out.println("Masukkan Data Mahasiswa ke-" + (i + 1));
+            System.out.print("NIM   : ");
+            String nim = sc.nextLine();
+            System.out.print("Nama  : ");
+            String nama = sc.nextLine();
+            System.out.print("Kelas : ");
+            String kelas = sc.nextLine();
+            System.out.print("IPK   : ");
+            double ipk = sc.nextDouble();
+            sc.nextLine(); 
+            
+            Mahasiswa21 mhs = new Mahasiswa21(nim, nama, kelas, ipk);
+            list.tambah(mhs);
         }
 
-        System.out.println("HASIL PANGKAT BRUTEFORCE:");
-        for (Pangkat21 p : png) {
-            System.out.println(
-                p.nilai +
-                    "^" +
-                    p.pangkat +
-                    ": " +
-                    p.pangkatBF(p.nilai, p.pangkat)
-            );
-        }
-
-        System.out.println("HASIL PANGKAT DIVIDE AND CONQUER:");
-        for (Pangkat21 p : png) {
-            System.out.println(
-                p.nilai +
-                    "^" +
-                    p.pangkat +
-                    ": " +
-                    p.pangkatDC(p.nilai, p.pangkat)
-            );
-        }
-
-        input.close();
-    }
-}
-
-```
-
-Output:
-
-```bash
-Bash
-
-PS C:\GitHub\PrakAlgoData26_1E_21> java minggu5/src/MainPangkat.java
-Masukkan jumlah elemen: 3
-Masukkan nilai basis elemen ke-1: 2
-Masukkan nilai pangkat elemen ke-1: 3
-Masukkan nilai basis elemen ke-2: 4
-Masukkan nilai pangkat elemen ke-2: 5
-Masukkan nilai basis elemen ke-3: 6
-Masukkan nilai pangkat elemen ke-3: 7
-HASIL PANGKAT BRUTEFORCE:
-2^3: 8
-4^5: 1024
-6^7: 279936
-HASIL PANGKAT DIVIDE AND CONQUER:
-2^3: 8
-4^5: 1024
-6^7: 279936
-```
-
-### Pertanyaan
-
-1. Jelaskan mengenai perbedaan 2 method yang dibuat yaitu `pangkatBF()` dan `pangkatDC()`!
-
-= Method `pangkatBF()` menggunakan pendekatan `Brute Force` (iteratif) untuk mengalikan nilai basis sebanyak `n` kali sehingga prosesnya standar `(O(n))`, sedangkan `pangkatDC()` menggunakan pendekatan `Divide and Conquer` (rekursif) pangkat dibagi 2 `(n/2)`, kemudian menggabungkan hasilnya yang membuat keseluruhan proses bisa lebih efisien.
-
-<br>
-
-2. Apakah tahap combine sudah termasuk dalam kode tersebut? Tunjukkan!
-
-= Combine sudah ada di dalam kode tersebut, contohnya:
-```java
-return (pangkatDC(a, n / 2) * pangkatDC(a, n / 2) * a);
-```
-
-<br>
-
-3. Pada method `pangkatBF()` terdapat parameter untuk melewatkan nilai yang akan dipangkatkan dan pangkat berapa, padahal di sisi lain di class `Pangkat` telah ada atribut `nilai` dan `pangkat`, apakah menurut Anda method tersebut tetap relevan untuk memiliki parameter? Apakah bisa jika method tersebut dibuat dengan tanpa parameter? Jika bisa, seperti apa method `pangkatBF()` yang tanpa parameter?
-
-= Method `pangkatBF()` "sebenarnya" tidak diwajibkan memiliki parameter, karena nilai `nilai` dan `pangkat` sudah ada sebagai atribut class. Method dapat langsung menggunakan atribut tersebut tanpa parameter agar lebih singkat.
-
-<br>
-
-4. Tarik tentang cara kerja method `pangkatBF()` dan `pangkatDC()`!
-
-= Kesimpulannya, method `pangkatBF()` bekerja dengan meng-kalikan nilai secara berulang menggunakan pendekatan `Brute Force` (iteratif), dan prosesnya sederhana. Sedangkan `pangkatDC()` bekerja dengan memecah masalah menjadi lebih kecil menggunakan pendekatan `Divide and Conquer` (rekursif), dan lebih efisien karena jumlah operasi yang dijalankan lebih sedikit.
-
-<br>
-
-### 5.4: Menghitung Sum Array dengan Algoritma Brute Force dan Divide and Conquer
-
-Kode program:
-
-```java
-Java
-Sum21.java
-
-public class Sum21 {
-
-    double keuntungan[];
-
-    Sum21(int el) {
-        keuntungan = new double[el];
-    }
-
-    double totalBF() {
-        double total = 0;
-        for (int i = 0; i < keuntungan.length; i++) {
-            total = total + keuntungan[i];
-        }
-
-        return total;
-    }
-
-    double totalDC(double arr[], int l, int r) {
-        if (l == r) {
-            return arr[l];
-        }
-
-        int mid = (l + r) >> 1;
-
-        double lsum = totalDC(arr, l, mid);
-        double rsum = totalDC(arr, mid + 1, r);
-
-        return lsum + rsum;
-    }
-}
-```
-
-```java
-Java
-MainSum.java
-
-import java.util.Scanner;
-
-public class MainSum {
-
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-
-        System.out.print("Masukkan jumlah elemen: ");
-
-        int elemen = input.nextInt();
-
-        Sum21 sm = new Sum21(elemen);
-        for (int i = 0; i < elemen; i++) {
-            System.out.print("Masukkan keuntungan ke-" + (i + 1) + ": ");
-            sm.keuntungan[i] = input.nextDouble();
-        }
-
-        System.out.println(
-            "Total keuntungan menggunakan BruteForce: " + sm.totalBF()
-        );
-        System.out.println(
-            "Total keuntungan menggunakan Divide and Conquer: " +
-                sm.totalDC(sm.keuntungan, 0, elemen - 1)
-        );
-
-        input.close();
+        System.out.println("\nData Mahasiswa setelah sorting berdasarkan IPK (DESC) dengan BUBBLE SORT:");
+        list.bubbleSort();
+        list.tampil();
     }
 }
 ```
 
 Output:
-
 ```bash
 Bash
 
-PS C:\GitHub\PrakAlgoData26_1E_21> java minggu5/src/MainSum.java
-Masukkan jumlah elemen: 5
-Masukkan keuntungan ke-1: 10
-Masukkan keuntungan ke-2: 20
-Masukkan keuntungan ke-3: 30
-Masukkan keuntungan ke-4: 40
-Masukkan keuntungan ke-5: 50
-Total keuntungan menggunakan BruteForce: 150.0
-Total keuntungan menggunakan Divide and Conquer: 150.0
+Masukkan jumlah kuota Mahasiswa: 4
+Masukkan Data Mahasiswa ke-1
+NIM   : 101
+Nama  : Budi
+Kelas : 1A
+IPK   : 3.2
+Masukkan Data Mahasiswa ke-2
+NIM   : 102
+Nama  : Siti
+Kelas : 1A
+IPK   : 3.8
+Masukkan Data Mahasiswa ke-3
+NIM   : 103
+Nama  : Andi
+Kelas : 1A
+IPK   : 3.5
+Masukkan Data Mahasiswa ke-4
+NIM   : 104
+Nama  : Rara
+Kelas : 1A
+IPK   : 3.1
+
+Data mahasiswa sebelum sorting: 
+Nama : Budi
+NIM  : 101
+Kelas: 1A
+IPK  : 3.2
+-------------------------
+Nama : Siti
+NIM  : 102
+Kelas: 1A
+IPK  : 3.8
+-------------------------
+Nama : Andi
+NIM  : 103
+Kelas: 1A
+IPK  : 3.5
+-------------------------
+Nama : Rara
+NIM  : 104
+Kelas: 1A
+IPK  : 3.1
+-------------------------
+
+Data Mahasiswa setelah sorting berdasarkan IPK (DESC) dengan BUBBLE SORT:
+Nama : Siti
+NIM  : 102
+Kelas: 1A
+IPK  : 3.8
+-------------------------
+Nama : Andi
+NIM  : 103
+Kelas: 1A
+IPK  : 3.5
+-------------------------
+Nama : Budi
+NIM  : 101
+Kelas: 1A
+IPK  : 3.2
+-------------------------
+Nama : Rara
+NIM  : 104
+Kelas: 1A
+IPK  : 3.1
+-------------------------
+
+Data yang sudah terurut (ASC) dengan SELECTION SORT:
+Nama : Rara
+NIM  : 104
+Kelas: 1A
+IPK  : 3.1
+-------------------------
+Nama : Budi
+NIM  : 101
+Kelas: 1A
+IPK  : 3.2
+-------------------------
+Nama : Andi
+NIM  : 103
+Kelas: 1A
+IPK  : 3.5
+-------------------------
+Nama : Siti
+NIM  : 102
+Kelas: 1A
+IPK  : 3.8
+-------------------------
+
+Data yang sudah terurut (DESC) dengan INSERTION SORT (Modifikasi):
+Nama : Siti
+NIM  : 102
+Kelas: 1A
+IPK  : 3.8
+-------------------------
+Nama : Andi
+NIM  : 103
+Kelas: 1A
+IPK  : 3.5
+-------------------------
+Nama : Budi
+NIM  : 101
+Kelas: 1A
+IPK  : 3.2
+-------------------------
+Nama : Rara
+NIM  : 104
+Kelas: 1A
+IPK  : 3.1
+-------------------------
 ```
 
-### Pertanyaan
 
-1. Kenapa dibutuhkan variable `mid` pada method `TotalDC()`?
+#### Pertanyaan Bubble Sort
+1. Perhatikan perulangan di dalam bubbleSort():
+   a. Mengapa syarat dari perulangan i adalah i<listMhs.length-1?
+   = Karena pada iterasi (fase/putaran) paling luar, kita hanya perlu melakukan perulangan sebanyak "jumlah elemen dikurangi 1". Jika elemen lainnya sudah diurutkan dengan benar, elemen terakhir otomatis akan menempati posisinya yang benar di sisa ruang, sehingga tidak perlu lagi diiterasi ulang.
 
-= `mid` digunakan untuk menentukan titik tengah array agar dapat membagi array menjadi tepat dua bagian. Metode pendekatan ini termasuk `Divide and Conquer` yang dimana poin intinya adalah memecah masalah menjadi bentuk lebih kecil agar lebih efisien dalam proses pemecahan masalah.
+   b. Mengapa syarat dari perulangan j adalah j<listMhs.length-i?
+   = Karena dalam setiap tahap (fase i) yang sudah selesai berjalan, setidaknya sudah ada satu elemen bernilai paling besar/kecil yang berada di posisi akhir yang tepat. Mengurangi iterasi di dalam dengan i mencegah algoritma mengecek kembali elemen-elemen di bagian ekor yang sudah terurut, sehingga proses jauh lebih optimal.
 
-<br>
+   c. Jika banyak data di dalam listMhs adalah 50, maka berapa kali perulangan i akan berlangsung? Dan ada berapa Tahap bubble sort yang ditempuh?
+   = Perulangan i akan berlangsung sebanyak 49 kali (karena 50 dikurangi 1). Maka, tahap Bubble Sort yang ditempuh juga sebanyak 49 tahap.
 
-2. Untuk apakah statement di bawah ini dilakukan dalam `TotalDC()`?
+2. Modifikasi program di atas di mana data mahasiswa bersifat dinamis (input dari keyboard) yang terdiri dari nim, nama, kelas, dan ipk!
+= Program di atas (class MahasiswaDemo21) sudah dimodifikasi menggunakan Scanner dan iterasi dinamis agar pengguna bisa memasukkan jumlah kuota array di awal lalu menginput data secara manual dari keyboard.
+
+#### Pertanyaan Selection Sort
+
+1. Di dalam method selection sort, terdapat baris program... (proses perbandingan idxMin). Untuk apakah proses tersebut, jelaskan!
+= Kode di dalam blok tersebut digunakan untuk mecari dan menentukan indeks dari elemen array yang memiliki IPK paling kecil (nilai minimum) pada sisa array yang belum tersortir. Jika ada IPK di suatu indeks j yang lebih kecil dari indeks minimum sementara (idxMin), maka variabel idxMin diperbarui dengan indeks j tersebut.
+
+#### Pertanyaan Insertion Sort
+
+1. Ubahlah fungsi pada InsertionSort sehingga fungsi ini dapat melaksanakan proses sorting dengan cara descending.
+= Modifikasi tersebut sudah diimplementasikan menjadi method bernama insertionSortDesc() pada class MahasiswaBerprestasi21. Hal yang diubah hanyalah operator perbandingan pada kondisi while loop, dari yang awalnya "lebih besar dari" (>) menjadi "kurang dari" (<) seperti pada kode berikut:
 
 ```java
-    double lsum = totalDC(arr, l, mid);
-    double rsum = totalDC(arr, mid + 1, r);
+while (j > 0 && listMhs[j - 1] != null && listMhs[j - 1].ipk < temp.ipk) {
 ```
 
-= Statement tersebut digunakan untuk membagi masalah menjadi dua bagian:
-
-- `lsum` menghitung sum kiri array
-- `rsum` menghitung sum kanan array
-
-<br>
-
-3. Kenapa diperlukan penjumlahan hasil `lsum` dan `rsum` seperti di bawah ini?
-
-```java
-    return lsum + rsum;
-```
-
-= `lsum + rsum` adalah tahap combine, yaitu penggabungan dari masalah-masalah yang sudah dipecah di awal agar mendapatkan hasil akhir.
-
-<br>
-
-4. Apakah base case dari `totalDC()`?
-
-= Base case:
-
-```java
-if (l == r) {
-  return arr[l];
-}
-```
-
-Artinya, jika hanya ada satu elemen, maka langsung dikembalikan nilainya karena tidak bisa dibagi lagi.
-
-<br>
-
-5. Tarik Kesimpulan tentang cara kerja `totalDC()`
-
-= Method `totalDC()` berjalan dengan cara membagi array menjadi dua bagian secara rekursif hingga mencapai base case. Kemudian hasil dari pembagian array tersebut dijumlahkan kembali (combine) untuk memperoleh total keseluruhan.
-
-<br>
-
-### 4.5 Latihan Praktikum
-
-#### Sebuah kampus memiliki daftar nilai mahasiswa dengan data sesuai tabel di bawah ini
-
-| Nama  | NIM        | Tahun Masuk | Nilai UTS | Nilai UAS |
-|-------|------------|-------------|-----------|-----------|
-| Ahmad | 220101001  | 2022        | 78        | 82        |
-| Budi  | 220101002  | 2022        | 85        | 88        |
-| Cindy | 220101003  | 2021        | 90        | 87        |
-| Dian  | 220101004  | 2021        | 76        | 79        |
-| Eko   | 220101005  | 2023        | 92        | 95        |
-| Fajar | 220101006  | 2020        | 88        | 85        |
-| Gina  | 220101007  | 2023        | 80        | 83        |
-| Hadi  | 220101008  | 2020        | 82        | 84        |
-
-Tentukan:
-
-a) Nilai UTS tertinggi tertinggi menggunakan Divide and Conquer!
-b) Nilai UTS terendah menggunakan Divide and Conquer!
-c) Rata-rata nilai UAS dari semua mahasiswa menggunakan Brute Force!
-
-= Kode program:
+### Latihan Praktikum
 
 ```java
 Java
-Mahasiswa.java
+Dosen21.java
 
-public class Mahasiswa {
-
+public class Dosen21 {
+    String kode;
     String nama;
-    String nim;
-    int tahunMasuk;
-    int nilaiUTS;
-    int nilaiUAS;
+    boolean jenisKelamin; 
+    int usia;
 
-    public Mahasiswa(
-        String nama,
-        String nim,
-        int tahunMasuk,
-        int nilaiUTS,
-        int nilaiUAS
-    ) {
-        this.nama = nama;
-        this.nim = nim;
-        this.tahunMasuk = tahunMasuk;
-        this.nilaiUTS = nilaiUTS;
-        this.nilaiUAS = nilaiUAS;
+    public Dosen21(String kd, String name, boolean jk, int age) {
+        kode = kd;
+        nama = name;
+        jenisKelamin = jk;
+        usia = age;
+    }
+
+    public void tampil() {
+        System.out.println("Kode Dosen : " + kode);
+        System.out.println("Nama       : " + nama);
+        System.out.println("Gender     : " + (jenisKelamin ? "Laki-laki" : "Perempuan"));
+        System.out.println("Usia       : " + usia + " tahun");
+        System.out.println("-----------------------------");
     }
 }
 ```
 
 ```java
 Java
-NilaiMahasiswa.java
+DataDosen21.java
 
-public class NilaiMahasiswa {
+public class DataDosen21 {
+    Dosen21[] dataDosen = new Dosen21[10];
+    int idx = 0;
 
-    public static int cariMaxUTS(Mahasiswa[] mhs, int low, int high) {
-        if (low == high) {
-            return mhs[low].nilaiUTS;
+    public void tambah(Dosen21 dsn) {
+        if (idx < dataDosen.length) {
+            dataDosen[idx] = dsn;
+            idx++;
+            System.out.println("Data Dosen berhasil ditambahkan!");
+        } else {
+            System.out.println("Kapasitas data Dosen penuh!");
         }
-        
-        int mid = (low + high) / 2;
-        int maxKiri = cariMaxUTS(mhs, low, mid);
-        int maxKanan = cariMaxUTS(mhs, mid + 1, high);
-        
-        return Math.max(maxKiri, maxKanan);
     }
 
-    public static int cariMinUTS(Mahasiswa[] mhs, int low, int high) {
-        if (low == high) {
-            return mhs[low].nilaiUTS;
+    public void tampil() {
+        if (idx == 0) {
+            System.out.println("Data Dosen kosong.");
+            return;
         }
-        
-        int mid = (low + high) / 2;
-        int minKiri = cariMinUTS(mhs, low, mid);
-        int minKanan = cariMinUTS(mhs, mid + 1, high);
-        
-        return Math.min(minKiri, minKanan);
+        for (int i = 0; i < idx; i++) {
+            dataDosen[i].tampil();
+        }
     }
 
-    public static double hitungRataUAS(Mahasiswa[] mhs) {
-        double total = 0;
-        for (Mahasiswa m : mhs) {
-            total += m.nilaiUAS;
+    // Menggunakan Bubble Sort (ASC)
+    public void sortingASC() {
+        for (int i = 0; i < idx - 1; i++) {
+            for (int j = 1; j < idx - i; j++) {
+                if (dataDosen[j - 1].usia > dataDosen[j].usia) {
+                    Dosen21 temp = dataDosen[j];
+                    dataDosen[j] = dataDosen[j - 1];
+                    dataDosen[j - 1] = temp;
+                }
+            }
         }
-        return total / mhs.length;
+        System.out.println("Data berhasil diurutkan berdasarkan Usia (Termuda - Tertua).");
+    }
+
+    // Menggunakan Selection Sort (DESC)
+    public void sortingDSC() {
+        for (int i = 0; i < idx - 1; i++) {
+            int max = i;
+            for (int j = i + 1; j < idx; j++) {
+                if (dataDosen[j].usia > dataDosen[max].usia) {
+                    max = j;
+                }
+            }
+            Dosen21 temp = dataDosen[i];
+            dataDosen[i] = dataDosen[max];
+            dataDosen[max] = temp;
+        }
+        System.out.println("Data berhasil diurutkan berdasarkan Usia (Tertua - Termuda).");
     }
 }
 ```
 
-
 ```java
 Java
-MainNilai.java
+DosenMain21.java
 
-public class MainNilai {
+import java.util.Scanner;
 
+public class DosenMain21 {
     public static void main(String[] args) {
-        Mahasiswa[] daftarMhs = {
-            new Mahasiswa("Ahmad", "220101001", 2022, 78, 82),
-            new Mahasiswa("Budi", "220101002", 2022, 85, 88),
-            new Mahasiswa("Cindy", "220101003", 2021, 90, 87),
-            new Mahasiswa("Dian", "220101004", 2021, 76, 79),
-            new Mahasiswa("Eko", "220101005", 2023, 92, 95),
-            new Mahasiswa("Fajar", "220101006", 2020, 88, 85),
-            new Mahasiswa("Gina", "220101007", 2023, 80, 83),
-            new Mahasiswa("Hadi", "220101008", 2020, 82, 84),
-        };
+        Scanner scan = new Scanner(System.in);
+        DataDosen21 data = new DataDosen21();
+        int pilih;
 
-        int maxUTS = NilaiMahasiswa.cariMaxUTS(
-            daftarMhs,
-            0,
-            daftarMhs.length - 1
-        );
+        do {
+            System.out.println("\n=== MENU MANAJEMEN DATA DOSEN ===");
+            System.out.println("1. Tambah Data Dosen");
+            System.out.println("2. Tampil Seluruh Data Dosen");
+            System.out.println("3. Sorting Usia ASC (Bubble Sort)");
+            System.out.println("4. Sorting Usia DESC (Selection Sort)");
+            System.out.println("5. Keluar");
+            System.out.print("Pilih menu (1-5): ");
+            pilih = scan.nextInt();
+            scan.nextLine(); 
 
-        int minUTS = NilaiMahasiswa.cariMinUTS(
-            daftarMhs,
-            0,
-            daftarMhs.length - 1
-        );
+            switch (pilih) {
+                case 1:
+                    System.out.print("Kode Dosen : ");
+                    String kode = scan.nextLine();
+                    System.out.print("Nama Dosen : ");
+                    String nama = scan.nextLine();
+                    System.out.print("Jenis Kelamin (L/P): ");
+                    String jkInput = scan.nextLine();
+                    boolean jk = jkInput.equalsIgnoreCase("L");
+                    System.out.print("Usia       : ");
+                    int usia = scan.nextInt();
+                    scan.nextLine();
 
-        double rataUAS = NilaiMahasiswa.hitungRataUAS(daftarMhs);
-
-        System.out.println("=== HASIL PERHITUNGAN NILAI MAHASISWA ===");
-        System.out.println(
-            "a) Nilai UTS Tertinggi (Divide & Conquer) : " + maxUTS
-        );
-        System.out.println(
-            "b) Nilai UTS Terendah  (Divide & Conquer) : " + minUTS
-        );
-        System.out.printf(
-            "c) Rata-rata Nilai UAS (Brute Force)      : %.3f\n",
-            rataUAS
-        );
+                    Dosen21 dsnBaru = new Dosen21(kode, nama, jk, usia);
+                    data.tambah(dsnBaru);
+                    break;
+                case 2:
+                    System.out.println("\n--- DAFTAR DOSEN ---");
+                    data.tampil();
+                    break;
+                case 3:
+                    data.sortingASC();
+                    data.tampil();
+                    break;
+                case 4:
+                    data.sortingDSC();
+                    data.tampil();
+                    break;
+                case 5:
+                    System.out.println("Keluar dari program. Terima kasih!");
+                    break;
+                default:
+                    System.out.println("Pilihan menu tidak valid!");
+            }
+        } while (pilih != 5);
+        
+        scan.close();
     }
 }
-
 ```
 
 Output:
@@ -514,8 +596,124 @@ Output:
 ```bash
 Bash
 
-=== HASIL PERHITUNGAN NILAI MAHASISWA ===
-a) Nilai UTS Tertinggi (Divide & Conquer) : 92
-b) Nilai UTS Terendah  (Divide & Conquer) : 76
-c) Rata-rata Nilai UAS (Brute Force)      : 85.375
+=== MENU MANAJEMEN DATA DOSEN ===
+1. Tambah Data Dosen
+2. Tampil Seluruh Data Dosen
+3. Sorting Usia ASC (Bubble Sort)
+4. Sorting Usia DESC (Selection Sort)
+5. Keluar
+Pilih menu (1-5): 1
+Kode Dosen : D01
+Nama Dosen : Pak Anton
+Jenis Kelamin (L/P): L
+Usia       : 45
+Data Dosen berhasil ditambahkan!
+
+=== MENU MANAJEMEN DATA DOSEN ===
+1. Tambah Data Dosen
+2. Tampil Seluruh Data Dosen
+3. Sorting Usia ASC (Bubble Sort)
+4. Sorting Usia DESC (Selection Sort)
+5. Keluar
+Pilih menu (1-5): 1
+Kode Dosen : D02
+Nama Dosen : Bu Rina
+Jenis Kelamin (L/P): P
+Usia       : 35
+Data Dosen berhasil ditambahkan!
+
+=== MENU MANAJEMEN DATA DOSEN ===
+1. Tambah Data Dosen
+2. Tampil Seluruh Data Dosen
+3. Sorting Usia ASC (Bubble Sort)
+4. Sorting Usia DESC (Selection Sort)
+5. Keluar
+Pilih menu (1-5): 1
+Kode Dosen : D03
+Nama Dosen : Pak Budi
+Jenis Kelamin (L/P): L
+Usia       : 50
+Data Dosen berhasil ditambahkan!
+
+=== MENU MANAJEMEN DATA DOSEN ===
+1. Tambah Data Dosen
+2. Tampil Seluruh Data Dosen
+3. Sorting Usia ASC (Bubble Sort)
+4. Sorting Usia DESC (Selection Sort)
+5. Keluar
+Pilih menu (1-5): 2
+
+--- DAFTAR DOSEN ---
+Kode Dosen : D01
+Nama       : Pak Anton
+Gender     : Laki-laki
+Usia       : 45 tahun
+-----------------------------
+Kode Dosen : D02
+Nama       : Bu Rina
+Gender     : Perempuan
+Usia       : 35 tahun
+-----------------------------
+Kode Dosen : D03
+Nama       : Pak Budi
+Gender     : Laki-laki
+Usia       : 50 tahun
+-----------------------------
+
+=== MENU MANAJEMEN DATA DOSEN ===
+1. Tambah Data Dosen
+2. Tampil Seluruh Data Dosen
+3. Sorting Usia ASC (Bubble Sort)
+4. Sorting Usia DESC (Selection Sort)
+5. Keluar
+Pilih menu (1-5): 3
+Data berhasil diurutkan berdasarkan Usia (Termuda - Tertua).
+Kode Dosen : D02
+Nama       : Bu Rina
+Gender     : Perempuan
+Usia       : 35 tahun
+-----------------------------
+Kode Dosen : D01
+Nama       : Pak Anton
+Gender     : Laki-laki
+Usia       : 45 tahun
+-----------------------------
+Kode Dosen : D03
+Nama       : Pak Budi
+Gender     : Laki-laki
+Usia       : 50 tahun
+-----------------------------
+
+=== MENU MANAJEMEN DATA DOSEN ===
+1. Tambah Data Dosen
+2. Tampil Seluruh Data Dosen
+3. Sorting Usia ASC (Bubble Sort)
+4. Sorting Usia DESC (Selection Sort)
+5. Keluar
+Pilih menu (1-5): 4
+Data berhasil diurutkan berdasarkan Usia (Tertua - Termuda).
+Kode Dosen : D03
+Nama       : Pak Budi
+Gender     : Laki-laki
+Usia       : 50 tahun
+-----------------------------
+Kode Dosen : D01
+Nama       : Pak Anton
+Gender     : Laki-laki
+Usia       : 45 tahun
+-----------------------------
+Kode Dosen : D02
+Nama       : Bu Rina
+Gender     : Perempuan
+Usia       : 35 tahun
+-----------------------------
+
+=== MENU MANAJEMEN DATA DOSEN ===
+1. Tambah Data Dosen
+2. Tampil Seluruh Data Dosen
+3. Sorting Usia ASC (Bubble Sort)
+4. Sorting Usia DESC (Selection Sort)
+5. Keluar
+Pilih menu (1-5): 5
+Keluar dari program. Terima kasih!
 ```

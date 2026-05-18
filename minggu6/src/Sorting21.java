@@ -1,9 +1,8 @@
 public class Sorting21 {
-
     int[] data;
     int jumData;
 
-    Sorting21(int Data[], int jmlDat) {
+    public Sorting21(int[] Data, int jmlDat) {
         jumData = jmlDat;
         data = new int[jmlDat];
         for (int i = 0; i < jumData; i++) {
@@ -11,7 +10,7 @@ public class Sorting21 {
         }
     }
 
-    void BubbleSort() {
+    public void bubbleSort() {
         int temp = 0;
         for (int i = 0; i < jumData - 1; i++) {
             for (int j = 1; j < jumData - i; j++) {
@@ -24,7 +23,7 @@ public class Sorting21 {
         }
     }
 
-    void SelectionSort() {
+    public void selectionSort() {
         for (int i = 0; i < jumData - 1; i++) {
             int min = i;
             for (int j = i + 1; j < jumData; j++) {
@@ -38,8 +37,8 @@ public class Sorting21 {
         }
     }
 
-    void InsertionSort() {
-        for (int i = 1; i < data.length - 1; i++) {
+    public void insertionSort() {
+        for (int i = 1; i <= data.length - 1; i++) {
             int temp = data[i];
             int j = i - 1;
             while (j >= 0 && data[j] > temp) {
@@ -50,7 +49,7 @@ public class Sorting21 {
         }
     }
 
-    void tampil() {
+    public void tampil() {
         for (int i = 0; i < jumData; i++) {
             System.out.print(data[i] + " ");
         }
