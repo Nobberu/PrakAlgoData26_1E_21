@@ -1,16 +1,20 @@
 public class Mahasiswa21 {
+    String nim;
+    String nama;
+    String kelas;
+    double ipk;
 
-    String nim, nama, prodi;
-
-    Mahasiswa21(String nim, String nama, String prodi) {
+    public Mahasiswa21(String nim, String nama, String kelas, double ipk) {
         this.nim = nim;
         this.nama = nama;
-        this.prodi = prodi;
+        this.kelas = kelas;
+        this.ipk = ipk;
     }
 
-    void tampilMahasiswa21() {
-        System.out.println(
-            "NIM: " + nim + " | Nama: " + nama + " | Prodi: " + prodi
-        );
+    public void tampilInformasi() {
+        System.out.println("NIM   : " + nim);
+        System.out.println("Nama  : " + nama);
+        System.out.println("Kelas : " + kelas);
+        System.out.println("IPK   : " + ipk);
     }
 }
