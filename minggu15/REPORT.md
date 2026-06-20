@@ -1,19 +1,17 @@
 # REPORT
 
-## Jobsheet 16 - Collection
+## 1. Kegiatan Praktikum 1: Collection - List
 
-### Kegiatan Praktikum 1: Collection - List
-
-Kode program:
+### 1.1. Kode Program (`ContohList21.java`)
 
 ```java
-// ContohList21.java
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class ContohList21 {
     public static void main(String[] args) {
+        // Percobaan 1: ArrayList tipe dinamis (Object)
         List l = new ArrayList();
         l.add(1);
         l.add(2);
@@ -27,6 +25,7 @@ public class ContohList21 {
 
         System.out.println("-------------------------------------");
 
+        // Percobaan 1 (Modifikasi): LinkedList tipe spesifik String
         LinkedList<String> names = new LinkedList<>();
         names.add("Noureen");
         names.add("Akhleema");
@@ -39,37 +38,42 @@ public class ContohList21 {
         System.out.printf("Elemen 0: %s total elemen: %d elemen terakhir: %s\n", names.get(0), names.size(), names.get(names.size() - 1));
         System.out.println("Names: " + names.toString());
         
+        // Modifikasi push()
         names.push("Mei-mei");
         System.out.printf("Elemen 0: %s total elemen: %d elemen terakhir: %s\n", names.getFirst(), names.size(), names.getLast());
         System.out.println("Names: " + names.toString());
     }
 }
-
 ```
 
-#### Pertanyaan 16.2.3 (Percobaan 1)
+### 1.2. Hasil Eksekusi
 
-1. Perhatikan baris kode 25-36, mengapa semua jenis data bisa ditampung ke dalam sebuah Arraylist?
-= Karena `ArrayList` diinisialisasi tanpa menspesifikasikan tipe data generik (`List l = new ArrayList();`). Hal ini merupakan penggunaan *raw type*, sehingga Java secara implisit akan menampung semua data sebagai tipe `Object` yang merupakan *superclass* dari semua tipe data.
+```text
+Elemen 0: 1 total elemen: 4 elemen terakhir: Cireng
+Elemen 0: 2 total elemen: 4 elemen terakhir: 4
+-------------------------------------
+Elemen 0: Noureen total elemen: 5 elemen terakhir: Al-Qarni
+Elemen 0: My kid total elemen: 5 elemen terakhir: Al-Qarni
+Names: [My kid, Akhleema, Shannum, Uwais, Al-Qarni]
+Elemen 0: Mei-mei total elemen: 6 elemen terakhir: Al-Qarni
+Names: [Mei-mei, My kid, Akhleema, Shannum, Uwais, Al-Qarni]
+```
 
-<br/>
+### 1.3. Jawaban Pertanyaan Percobaan
+1. **Mengapa semua jenis data bisa ditampung ke dalam sebuah ArrayList pada baris 25-36?**
+   Karena `ArrayList` diinisialisasi tanpa menspesifikasikan tipe data generik (`List l = new ArrayList();`). Ini merupakan *raw type*, sehingga Java secara otomatis akan menampung semua data sebagai tipe `Object` yang merupakan *superclass* dari semua tipe data.
+2. **Modifikasi agar data yang ditampung hanya satu jenis!**
+   Gunakan *Diamond Operator* `< >`. Contohnya: `List<Integer> l = new ArrayList<>();`
+3. **Penjelasan fungsi `push("Mei-mei")` pada `LinkedList`:**
+   Method `push()` pada `LinkedList` menyisipkan elemen pada posisi paling depan (index ke-0), layaknya operasi *stack* (tumpukan). Elemen "Mei-mei" menjadi `Elemen 0` yang baru dan otomatis menggeser indeks elemen-elemen sebelumnya.
 
-2. Modifikasi baris kode 25-36 seingga data yang ditampung hanya satu jenis atau spesifik tipe tertentu!
-= Modifikasi dilakukan dengan menggunakan *Diamond Operator* `< >` untuk menentukan tipe data spesifik. Contohnya: `List<Integer> l = new ArrayList<>();`.
+---
 
-<br/>
+## 2. Kegiatan Praktikum 2: Collection - Stack, Iterator & Stream
 
-3. Dari penambahan kode names.push("Mei-mei"); silakan dijalankan dan apakah yang dapat Anda jelaskan!
-= Method `push()` pada struktur `LinkedList` berfungsi menyisipkan elemen baru tepat pada posisi paling depan atau index ke-0. Elemen "Mei-mei" kini menjadi elemen paling awal dan secara otomatis menggeser indeks seluruh elemen sebelumnya ke kanan.
-
-<br/>
-
-### Kegiatan Praktikum 2: Collection - Stack, Iterator & Stream
-
-Kode program:
+### 2.1. Kode Program (`LoopCollection21.java`)
 
 ```java
-// LoopCollection21.java
 import java.util.Stack;
 import java.util.Iterator;
 import java.util.Collections;
@@ -94,12 +98,13 @@ public class LoopCollection21 {
         }
         
         System.out.println("\n");
-        
+        // Refill stack
         fruits.push("Banana");
         fruits.add("Orange");
         fruits.add("Watermelon");
         fruits.add("Leci");
         fruits.push("Salak");
+        
         fruits.push("Melon");
         fruits.push("Durian");
         
@@ -120,6 +125,7 @@ public class LoopCollection21 {
         }
         System.out.println("");
 
+        // Uji coba modifikasi No 5 & 6
         System.out.println("\n--- Hasil Modifikasi ---");
         fruits.set(fruits.size() - 1, "Strawberry");
         fruits.addAll(Arrays.asList("Mango", "Guava", "Avocado"));
@@ -127,47 +133,28 @@ public class LoopCollection21 {
         System.out.println("Isi fruits setelah diurutkan: " + fruits.toString());
     }
 }
-
 ```
 
-#### Pertanyaan 16.3.3 (Percobaan 2)
+### 2.2. Jawaban Pertanyaan Percobaan
+1. **Perbedaan `push()` dan `add()` pada objek fruits:**
+   * `push()` adalah method bawaan dari class `Stack` yang menambahkan elemen ke urutan paling atas dari tumpukan (prinsip *Last-In-First-Out* / LIFO).
+   * `add()` adalah method turunan dari interface `Collection`/class `Vector` yang menyisipkan elemen ke bagian akhir list. Keduanya mengalokasikan data di posisi yang sama dalam implementasi internal Java, namun `push` akan me-return *item* yang dimasukkan, sedangkan `add` akan me-return status boolean.
+2. **Jika baris penambahan "Melon" dan "Durian" dihilangkan:**
+   Kedua buah tersebut tidak akan tersimpan di dalam memori `Stack`. Konsekuensinya, saat iterasi *print* dilakukan ke konsol, kedua nama buah tersebut tidak akan muncul.
+3. **Fungsi perulangan Iterator (baris 46-49):**
+   Digunakan untuk melakukan penelusuran (iterasi) yang aman pada *collection*. Method `hasNext()` mengecek apakah masih ada elemen yang tersisa, dan `next()` akan mengambil nilai elemen pada iterasi saat ini untuk ditampilkan.
+4. **Apa yang terjadi jika mengganti `Stack<String>` menjadi `List<String>`?**
+   Akan memunculkan *Compile-time error*. Interface `List` tidak memiliki definisi method `push()`, `empty()`, maupun `pop()`. Fungsi-fungsi tersebut eksklusif merupakan karakteristik dari struktur data *Stack*.
+5. **Ganti elemen terakhir & 6. Tambahkan 3 buah dan sorting:**
+   *Telah diimplementasikan pada baris terakhir kode `LoopCollection21.java`.*
 
-1. Apakah perbedaan fungsi push() dan add() pada objek fruits?
-= `push()` adalah method spesifik dari class `Stack` yang menyisipkan elemen ke urutan paling atas tumpukan (LIFO) dan mengembalikan nilai item tersebut. Sedangkan `add()` merupakan turunan dari antarmuka `Collection` yang menyisipkan elemen ke bagian akhir dan mengembalikan nilai boolean (true/false).
+---
 
-<br/>
+## 3. Kegiatan Praktikum 3: Implementasi Collection pada Objek
 
-2. Silakan hilangkan baris 43 dan 44, apakah yang akan terjadi? Mengapa bisa demikian?
-= Objek "Melon" dan "Durian" tidak akan dimasukkan ke dalam memori `Stack`. Akibatnya, saat iterasi dilakukan untuk mencetak nilai, kedua buah tersebut tidak akan ditampilkan di layar konsol karena memang tidak ada di dalam list koleksi.
-
-<br/>
-
-3. Jelaskan fungsi dari baris 46-49?
-= Baris kode tersebut berfungsi melakukan iterasi yang aman pada elemen-elemen *collection* menggunakan `Iterator`. `hasNext()` memeriksa ketersediaan elemen berikutnya , dan `next()` mengambil serta menggeser kursor ke elemen saat ini untuk dicetak.
-
-<br/>
-
-4. Silakan ganti baris kode 25, Stack menjadi List dan apakah yang terjadi? Mengapa bisa demikian?
-= Akan memicu *Compile-time error*. Antarmuka `List` secara bawaan tidak mendefinisikan method seperti `push()`, `empty()`, maupun `pop()` karena method tersebut eksklusif mewakili perilaku dari struktur data tumpukan atau *Stack*.
-
-<br/>
-
-5. Ganti elemen terakhir dari dari objek fruits menjadi "Strawberry"!
-= Telah diimplementasikan dalam baris kode modifikasi menggunakan statement `fruits.set(fruits.size() - 1, "Strawberry");`.
-
-<br/>
-
-6. Tambahkan 3 buah seperti "Mango","guava", dan "avocado" kemudian dilakukan sorting!
-= Telah diimplementasikan menggunakan pemanggilan `fruits.addAll(Arrays.asList("Mango", "Guava", "Avocado"));` dan diakhiri dengan fungsi pengurutan `Collections.sort(fruits);`.
-
-<br/>
-
-### Kegiatan Praktikum 3: Implementasi Collection pada Objek
-
-Kode program:
+### 3.1. Kode Program (`Mahasiswa21.java`)
 
 ```java
-// Mahasiswa21.java
 public class Mahasiswa21 implements Comparable<Mahasiswa21> {
     String nim;
     String nama;
@@ -188,14 +175,14 @@ public class Mahasiswa21 implements Comparable<Mahasiswa21> {
 
     @Override
     public int compareTo(Mahasiswa21 o) {
-        return this.nim.compareTo(o.nim); 
+        return this.nim.compareTo(o.nim); // Sorting ascending by NIM
     }
 }
-
 ```
 
+### 3.2. Kode Program (`ListMahasiswa21.java`)
+
 ```java
-// ListMahasiswa21.java
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -230,6 +217,7 @@ public class ListMahasiswa21 {
         return -1;
     }
 
+    // Binary Search (Syarat: Collection harus berurutan)
     int binarySearch(String nim) {
         Mahasiswa21 dummyMhs = new Mahasiswa21(nim, "", "");
         Collections.sort(mahasiswas);
@@ -262,32 +250,24 @@ public class ListMahasiswa21 {
         lm.tampil();
     }
 }
-
 ```
 
-#### Pertanyaan 16.4.3 (Percobaan 3)
+### 3.3. Jawaban Pertanyaan Percobaan
+1. **Konsep fungsi `tambah(Mahasiswa21... mahasiswa)`:**
+   Metode ini menggunakan fitur **Varargs (Variable Arguments)**. Keunggulan utamanya adalah fleksibilitas; kita bisa mengoper jumlah argumen yang dinamis (bahkan nol argumen) tanpa perlu mendefinisikan struktur array baru pada pemanggil fungsi.
+2. **Binary Search:**
+   *Telah diimplementasikan pada method `binarySearch()` di `ListMahasiswa21.java` menggunakan `Collections.binarySearch()`.*
+3. **Fungsi Sorting:**
+   *Telah diimplementasikan pada method `sortAscending()` dan `sortDescending()` dengan bantuan interface `Comparable` pada objek `Mahasiswa21`.*
 
-1. Pada fungsi tambah() yang menggunakan unlimited argument itu menggunakan konsep apa? Dan kelebihannya apa?
-= Metode tersebut mengadaptasi konsep *Varargs* (Variable Arguments) yang direpresentasikan dengan tiga titik `...` pada argumennya. Kelebihannya adalah memberikan fleksibilitas untuk menyisipkan jumlah parameter yang tidak terbatas (dinamis) dalam satu pemanggilan tanpa perlu mendefinisikan array secara manual.
+---
 
-<br/>
+## 4. Tugas Praktikum: Sistem Pengolahan Data Nilai Mahasiswa
 
-2. Pada fungsi linearSearch() di atas, silakan diganti dengan fungsi binarySearch() dari collection!
-= Telah diganti dan diimplementasikan pada method `binarySearch()` dengan menggunakan fungsi utilitas bawaan `Collections.binarySearch()`. Proses ini diawali dengan mengurutkan list terlebih dahulu untuk memenuhi syarat pencarian binary.
-
-<br/>
-
-3. Tambahkan fungsi sorting baik secara ascending ataupun descending pada class tersebut!
-= Telah ditambahkan fungsi `sortAscending()` dan `sortDescending()` dengan bantuan method `Collections.sort()` dan implementasi logika perbandingan data melalui interface `Comparable` pada struktur data `Mahasiswa21`.
-
-<br/>
-
-### Tugas Praktikum
-
-Kode program:
+### 4.1. Kode Program Lengkap (`SistemNilai21.java`)
+Program ini memuat implementasi class `MhsTugas21`, `MataKuliah21`, `Nilai21`, serta mengintegrasikan antrean penghapusan menggunakan tipe koleksi `Queue`.
 
 ```java
-// SistemNilai21.java
 import java.util.*;
 
 class MhsTugas21 {
@@ -318,6 +298,7 @@ public class SistemNilai21 {
     static List<MhsTugas21> listMhs = new ArrayList<>();
     static List<MataKuliah21> listMK = new ArrayList<>();
     static List<Nilai21> listNilai = new ArrayList<>();
+    // Fitur hapus data via Queue (Sesuai instruksi soal)
     static Queue<String> queueHapus = new LinkedList<>(); 
     static Scanner sc = new Scanner(System.in);
 
@@ -445,5 +426,4 @@ public class SistemNilai21 {
         }
     }
 }
-
 ```
